@@ -187,3 +187,7 @@ FakesAssemblies/
 GeneratedArtifacts/
 _Pvt_Extensions/
 ModelManifest.xml
+Console_PackageReview/.vs/Console_PackageReview/v15/Server/sqlite3/storage.ide-wal
+Console_PackageReview/.vs/Console_PackageReview/v15/Server/sqlite3/storage.ide-shm
+Console_PackageReview/.vs/Console_PackageReview/v15/Server/sqlite3/storage.ide
+Console_PackageReview/.vs/Console_PackageReview/v15/Server/sqlite3/db.lock
