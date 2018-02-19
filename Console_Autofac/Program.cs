@@ -1,6 +1,8 @@
 ﻿using System;
+using System.CodeDom;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Autofac;
@@ -34,10 +36,48 @@ namespace Console_Autofac
         {
             //建立對應中介
             ContainerBuilder builder = new ContainerBuilder();
-            //像是自動產生new AutoFacManager();
+            #region 類型創建RegisterType
+            ////像是自動產生new AutoFacManager();
+            //builder.RegisterType<AutoFacManager>();
+            ////碰到IPerson則進行new Worker動作
+            //builder.RegisterType<Student>().As<IPerson>();
+            #endregion
+
+            #region 實體創建
+            //builder.RegisterInstance<AutoFacManager>(new AutoFacManager(new Worker()));
+            #endregion
+
+            #region 單例 尚未研究
+            //透過builder.RegisterInstance(MySingleton.GetInstance()).ExternallyOwned()
+            #endregion
+
+            #region Lambda表達式創建
+            //builder.Register(c => new AutoFacManager(c.Resolve<IPerson>()));
+            //builder.RegisterType<Worker>().As<IPerson>();
+            #endregion
+
+            #region 程序集創建 透過目前正在執行中的程式去找
+            //builder.RegisterAssemblyTypes(Assembly.GetExecutingAssembly());//目前正在運行的程式去找
+            //builder.RegisterType<Worker>().As<IPerson>();
+            #endregion
+
+            #region 泛型註冊
+            //builder.RegisterGeneric(typeof(List<>)).As(typeof(IList<>)).InstancePerLifetimeScope();
+            //using (IContainer container = builder.Build())
+            //{
+            //    IList<string> ListString = container.Resolve<IList<string>>();
+            //}
+            #endregion
+
+            #region 註冊多次以最後註冊為主，或者使用設定將他為非默認
+
             builder.RegisterType<AutoFacManager>();
-            //碰到IPerson則進行new Worker動作
-            builder.RegisterType<Student>().As<IPerson>();
+            builder.RegisterType<Worker>().As<IPerson>();
+            builder.RegisterType<Student>().As<IPerson>().PreserveExistingDefaults();//指定為非默認
+            #endregion
+
+
+
             //執行上述建立動作
             using (IContainer container = builder.Build())
             {
